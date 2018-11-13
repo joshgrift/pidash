@@ -142,7 +142,7 @@ function checkServer(){
 
   function timer(){
     $.ajax({
-      url: "http://rocket1.grift.ca/status.txt",
+      url: "http://rocket1.grift.ca/status.txt?t=" + Date.now(),
       dataType: 'text',
       success: function(data){
         text.innerHTML = "1";

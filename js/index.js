@@ -55,13 +55,13 @@ var weathericons = {
   3200: "times",
 }
 
-
 // mains
 window.onload = function(){
-  setTimeout(function(){ location.reload(); }, 10 * 60 * 1000);
+  setTimeout(function(){ location.reload(); }, 20 * 60 * 1000);
   clock();
   weather();
   bus();
+  checkServer();
 }
 
 function clock(){
@@ -132,4 +132,24 @@ function bus(){
   }
 
   setInterval(timer,30 * 1000);
+}
+
+function checkServer(){
+  var text = document.getElementById("server_text");
+  text.innerHTML = "-";
+
+  setInterval(timer,1000);
+
+  function timer(){
+    $.ajax({
+      url: "http://rocket1.grift.ca/status.txt",
+      dataType: 'text',
+      success: function(data){
+        text.innerHTML = "1";
+      },
+      error: function(data){
+        text.innerHTML = "0";
+      }
+    });
+  }
 }

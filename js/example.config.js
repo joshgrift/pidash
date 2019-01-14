@@ -1,20 +1,17 @@
 var config = {
   backgroundUrl:"https://i.redd.it/mcljmha8ufb01.jpg",
-  widgets:{
-    weather: {
-      id:"weather",
-      css:true,
-      data:{appid:"xxxxxxxxxxx",city:"Los Angeles"}
+  widgets:[
+    {
+      widget:"GRTbus",
+      data:{stop:"5008"}
     },
-    status: {
-      id:"status",
-      css:false,
+    {
+      widget:"Status",
       data:{url:"https://example.com/status.txt"}
     },
-    bus: {
-      id:"bus",
-      css:false,
-      data:{url:"https://myfavouritebuscompany.com/api/bus.php?stop=1106"}
+    {
+      widget:"Weather",
+      data:{appid:"xxxxxxxxx",city:"Waterloo"}
     }
-  }
-}
+  ]
+};

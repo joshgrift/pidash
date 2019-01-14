@@ -1,24 +1,19 @@
 // our main widget storage
+var widgetDirectory = {};
 var widgets = {};
-var loaded = false;
+
+//count time until restart for updates
+var restart_count = 0;
+var restart_at = 6;
 
 // mains
 window.onload = function(){
   //load our widgets
   var html = "";
   for(var w in config.widgets){
-    loadfile("widgets/" + config.widgets[w].id + ".js?version=1","js");
-    if(config.widgets[w].css)
-      loadfile("widgets/" + config.widgets[w].id + ".css?version=1","css");
+    widgets[w] = new Widget(new widgetDirectory[config.widgets[w].widget](config.widgets[w].data));
 
-    widgets[w] = {
-      data:config.widgets[w],
-      control:null,
-      DOM_icon: null,
-      DOM_text: null
-    };
-
-    html = html + '<i id="' + config.widgets[w].id + '_icon" class="fas fa-x"></i> <span class="small" id="' + config.widgets[w].id + '_text"></span>';
+    html = html + '<i id="widget-' + w + '-icon" class="fas fa-x"></i> <span class="small" id="widget-' + w + '-text"></span>';
   }
 
   //push the widgets html to the page
@@ -26,9 +21,12 @@ window.onload = function(){
 
   //load the DOM elements into our widget array
   for(var w in config.widgets){
-    widgets[w].DOM_icon = document.getElementById(widgets[w].data.id + "_icon");
-    widgets[w].DOM_text = document.getElementById(widgets[w].data.id + "_text");
+    widgets[w].setIconDOM(document.getElementById("widget-" + w + "-icon"));
+    widgets[w].setTextDOM(document.getElementById("widget-" + w + "-text"));
   }
+
+  //set background
+  document.body.style.backgroundImage = "url('" + config.backgroundUrl + "')";
 
   // start the clock. It runs every second
   clock();
@@ -42,39 +40,47 @@ window.onload = function(){
   loop();
 }
 
-// imports the widget into our widgets list and sets it up
-function loadWidget(id, control){
-  widgets[id].control = control;
-  control.loop();
-  control.quickloop();
-  updateIcons(id);
-}
-
 // every 10 seconds second loop
 function quickloop(){
   for(var w in widgets){
-    if(widgets[w].control)
-      widgets[w].control.quickloop();
-    updateIcons(w);
+    if(widgets[w].control.quickloop){
+      widgets[w].control.quickloop(widgets[w].update);
+    }
   }
 }
 
 // 10 minute loop
 function loop(){
   for(var w in widgets){
-    if(widgets[w].control)
-      widgets[w].control.quickloop();
-    updateIcons(w);
+    if(widgets[w].control.loop){
+      widgets[w].control.loop(widgets[w].update);
+    }
   }
 
-
+  restart_count++;
+  if(restart_count == restart_at)
+    location.reload();
 }
 
-function updateIcons(w){
-  if(widgets[w].DOM_text && widgets[w].control)
-    widgets[w].DOM_text.innerHTML = widgets[w].control.text;
-  if(widgets[w].DOM_icon && widgets[w].control)
-    widgets[w].DOM_icon.className = widgets[w].control.icon;
+//our widget class
+function Widget(script){
+  var DOM_icon = null;
+  var DOM_text = null;
+
+  this.update = function(icon,text){
+    DOM_text.innerHTML = text;
+    DOM_icon.className = icon;
+  }
+
+  this.setIconDOM = function(i){
+    DOM_icon = i;
+  }
+
+  this.setTextDOM = function(i){
+    DOM_text = i;
+  }
+
+  this.control = script;
 }
 
 // our clock
@@ -106,61 +112,4 @@ function clock(){
 
     document.getElementById('clock').innerHTML = String(hr) + ":" + String(min) + "<span class='clock-small'> " + ""/*apm*/ + "</span>";
   }
-}
-
-function bus(){
-  var weatherText = document.getElementById("bus_text");
-
-  timer();
-
-  function timer(){
-    $.getJSON("http://nwoodthorpe.com/grt/V2/livetime.php?stop=1106",function(data){
-      var time = data.data[0].time;
-      var departure = data.data[0].departure;
-
-      var distanceOut = departure - time;
-      var eta = Math.ceil(distanceOut/60);
-
-      weatherText.innerHTML = eta;
-    });
-  }
-
-  setInterval(timer,30 * 1000);
-}
-
-function checkServer(){
-  var text = document.getElementById("server_text");
-  text.innerHTML = "-";
-
-  setInterval(timer,1000);
-
-  function timer(){
-    $.ajax({
-      url: "http://rocket1.grift.ca/status.txt?t=" + Date.now(),
-      dataType: 'text',
-      success: function(data){
-        text.innerHTML = "1";
-      },
-      error: function(data){
-        text.innerHTML = "0";
-      }
-    });
-  }
-}
-
-// Copied from https://stackoverflow.com/a/5762713/4314753
-function loadfile(filename, filetype){
-  if (filetype=="js"){ //if filename is a external JavaScript file
-    var fileref=document.createElement('script')
-    fileref.setAttribute("type","text/javascript")
-    fileref.setAttribute("src", filename)
-  }
-  else if (filetype=="css"){ //if filename is an external CSS file
-    var fileref=document.createElement("link")
-    fileref.setAttribute("rel", "stylesheet")
-    fileref.setAttribute("type", "text/css")
-    fileref.setAttribute("href", filename)
-  }
-  if (typeof fileref!="undefined")
-    document.getElementsByTagName("head")[0].appendChild(fileref)
 }

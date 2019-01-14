@@ -9,28 +9,17 @@ Weather Addon
   city  - city for data to come from
 
 */
-class Weather {
-  constructor(data){
-    //icon and text variables
-    this.icon = "owf owf-800-d";
-    this.text = "-6";
-    this._data = data;
-  }
 
+widgetDirectory.Weather = function(data){
   // 10 min loop
-  loop(){
-    // $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + this._data.city + "&appid=" + this._data.appid + "&units=metric",function(data){
-    //  this.icon = "";//data.weather[0].id
-    //  this.text = Math.round(data.main.temp);
-    // });
-  }
+  this.loop = null;
 
   // 10 second loop
-  quickloop(){
-    return null;
+  this.quickloop = function(callback){
+    $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + data.city + "&appid=" + data.appid + "&units=metric",function(data){
+      var icon = "owf owf-" + data.weather[0].id + "-d";
+      var text = Math.round(data.main.temp);
+      callback(icon, text);
+    });
   }
 }
-
-var obj = new Weather(config.widgets.weather.data);
-
-loadWidget("weather", obj);

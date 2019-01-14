@@ -1,42 +1,29 @@
 /*
 
-Weather Addon
+Status addon. Is 1 when on, and 0 when off.
 @author Josh Grift
 @version 1
 
 @data
-  appid - openweathermap.org api key
-  city  - city for data to come from
+  url - status url
 
 */
-class Status {
-  constructor(data){
-    //icon and text variables
-    this.icon = "fas fa-server";
-    this.text = "1";
-    this._data = data;
-  }
 
+widgetDirectory.Status = function(data){
   // 10 min loop
-  loop(){
+  this.loop = null;
+
+  // 10 second loop
+  this.quickloop = function(callback){
     $.ajax({
-      url: this._data.url + "?t=" + Date.now(),
+      url: data.url + "?t=" + Date.now(),
       dataType: 'text',
-      success: function(data){
-        this.text = "1";
+      success: function(){
+        callback("fas fa-server","1");
       },
-      error: function(data){
-        this.text = "0";
+      error: function(){
+        callback("fas fa-server","0");
       }
     });
   }
-
-  // 10 second loop
-  quickloop(){
-    return null;
-  }
 }
-
-var obj = new Status(config.widgets.status.data);
-
-loadWidget("status", obj);

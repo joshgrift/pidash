@@ -11,11 +11,11 @@ Weather Addon
 */
 
 widgetDirectory.Weather = function(data){
-  // 10 min loop
-  this.loop = null;
-
   // 10 second loop
-  this.quickloop = function(callback){
+  this.quickloop = null;
+
+  // 10 min loop
+  this.loop = function(callback){
     $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + data.city + "&appid=" + data.appid + "&units=metric",function(data){
       var icon = "owf owf-" + data.weather[0].id + "-d";
       var text = Math.round(data.main.temp);

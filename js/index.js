@@ -5,6 +5,7 @@ var widgets = {};
 //count time until restart for updates
 var restart_count = 0;
 var restart_at = 6;
+var backgroundImageIndex = 0;
 
 // mains
 window.onload = function(){
@@ -24,9 +25,6 @@ window.onload = function(){
     widgets[w].setIconDOM(document.getElementById("widget-" + w + "-icon"));
     widgets[w].setTextDOM(document.getElementById("widget-" + w + "-text"));
   }
-
-  //set background
-  document.body.style.backgroundImage = "url('" + config.backgroundUrl + "')";
 
   // start the clock. It runs every second
   clock();
@@ -60,6 +58,16 @@ function loop(){
   restart_count++;
   if(restart_count == restart_at)
     location.reload();
+
+  changeBackgroundImage();
+}
+
+function changeBackgroundImage(){
+    document.body.style.backgroundImage = "url('" + config.backgroundImages[backgroundImageIndex] + "')";
+    backgroundImageIndex++;
+    if (backgroundImageIndex >= config.backgroundImages.length) {
+        backgroundImageIndex = 0;
+    }
 }
 
 //our widget class

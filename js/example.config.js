@@ -1,5 +1,10 @@
 var config = {
-  backgroundUrl:"https://i.redd.it/mcljmha8ufb01.jpg",
+  backgroundImages:[
+      "https://i.imgur.com/mE1MUpd.jpeg",
+      "https://i.imgur.com/nR8jJEM.jpeg",
+      "https://flic.kr/p/2241jmw",
+      "https://flic.kr/p/SW9qPb",
+  ],
   widgets:[
     {
       widget:"GRTbus",

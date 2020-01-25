@@ -10,7 +10,12 @@
 ### config.js
 ```javascript
 var config = {
-  backgroundUrl:"https://i.redd.it/mcljmha8ufb01.jpg",
+  backgroundImages:[
+    "https://i.imgur.com/mE1MUpd.jpeg",
+    "https://i.imgur.com/nR8jJEM.jpeg",
+    "https://flic.kr/p/2241jmw",
+    "https://flic.kr/p/SW9qPb",
+  ],
   widgets:[
     {
       widget:"GRTbus",
@@ -27,7 +32,7 @@ var config = {
   ]
 };
 ```
-The config file allows you to select widgets and set the background image. The widget tag refers to the name of the function in the file and the data is passed to the widget constructor. We can include multiple instances of the same widget as well.
+The config file allows you to select widgets and set the background images. The widget tag refers to the name of the function in the file and the data is passed to the widget constructor. We can include multiple instances of the same widget as well.
 
 ### Widgets
 Widgets are added via a single js file in `/widgets` in the template below:

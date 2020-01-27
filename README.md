@@ -13,8 +13,8 @@ var config = {
   backgroundImages:[
     "https://i.imgur.com/mE1MUpd.jpeg",
     "https://i.imgur.com/nR8jJEM.jpeg",
-    "https://flic.kr/p/2241jmw",
-    "https://flic.kr/p/SW9qPb",
+    "https://live.staticflickr.com/5443/9369949185_0846c27d6c_b.jpg",
+    "https://live.staticflickr.com/3804/11623216156_9e9f5eaa4a_c.jpg",
   ],
   widgets:[
     {

@@ -69,3 +69,7 @@ Unfortunately, we need to include the js file in the top of index.html right now
 
 ## Contributing
 Feel free to submit a PR request with additions and/or bug fixes!
+
+### Contributers
+- david329
+- dotjersh

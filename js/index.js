@@ -27,7 +27,7 @@ window.onload = function(){
   }
 
   //load image destinations
-  $.getJSON("https://www.reddit.com/r/EarthPorn/hot.json",function(data){
+  $.getJSON(config.redditUrl,function(data){
     try{
       data["data"]["children"].forEach(element => {
         if (element["data"]["url"].includes(".jpg")){

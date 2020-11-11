@@ -47,6 +47,14 @@ div#icons {
   padding-left: 3vw;
 }
 
+div#date{
+  height: 5vh;
+  font-size: 5vh;
+  font-weight: bold;
+  padding-left: 3vw;
+  line-height: 0vh;
+}
+
 .small {
   margin-right: 50px;
 }

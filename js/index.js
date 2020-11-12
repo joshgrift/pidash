@@ -28,20 +28,17 @@ window.onload = function(){
 
   //load image destinations
   $.getJSON(config.redditUrl,function(data){
+    backgroundImages=[];
     try{
       data["data"]["children"].forEach(element => {
         if (element["data"]["url"].includes(".jpg")){
-          config.backgroundImages.push(element["data"]["url"])
+          backgroundImages.push(element["data"]["url"])
         }
       });
-
+      config.backgroundImages=backgroundImages;
     }catch(err){
-      config.backgroundImages=  [
-        "/img/bunnies.jpg", // https://i.imgur.com/mE1MUpd.jpeg
-        "https://i.imgur.com/nR8jJEM.jpeg",
-        "https://live.staticflickr.com/5443/9369949185_0846c27d6c_b.jpg",
-        "https://live.staticflickr.com/3804/11623216156_9e9f5eaa4a_c.jpg",
-    ]
+    console.log("Can't Retrieve Images, Using default images from Config")
+    
     }
     document.body.style.backgroundImage = "url('" + config.backgroundImages[backgroundImageIndex] + "')"
   });

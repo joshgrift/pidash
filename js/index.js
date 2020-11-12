@@ -26,6 +26,23 @@ window.onload = function(){
     widgets[w].setTextDOM(document.getElementById("widget-" + w + "-text"));
   }
 
+  //load image destinations
+  $.getJSON(config.redditUrl,function(data){
+    backgroundImages=[];
+    try{
+      data["data"]["children"].forEach(element => {
+        if (element["data"]["url"].includes(".jpg")){
+          backgroundImages.push(element["data"]["url"])
+        }
+      });
+      config.backgroundImages=backgroundImages;
+    }catch(err){
+    console.log("Can't Retrieve Images, Using default images from Config")
+    
+    }
+    document.body.style.backgroundImage = "url('" + config.backgroundImages[backgroundImageIndex] + "')"
+  });
+  console.log(config.backgroundImages)
   // start the clock. It runs every second
   clock();
 
@@ -93,14 +110,17 @@ function Widget(script){
 
 // our clock
 function clock(){
-  var hour = 0;
-  var min = 0;
+  var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday", "Saturday"];
   setInterval(timer,1000);
   timer();
 
   function timer(){
     var date = new Date;
 
+    var weekday = weekdays[date.getDay()];
+    var day =date.getDate()
+    var month = months[date.getMonth()];
     var hr = date.getHours();
     var min = date.getMinutes();
     var apm = "am";
@@ -118,6 +138,7 @@ function clock(){
       min = "0" + min;
     }
 
+    document.getElementById('date').innerHTML=weekday+", "+month +" " +String(day);
     document.getElementById('clock').innerHTML = String(hr) + ":" + String(min) + "<span class='clock-small'> " + ""/*apm*/ + "</span>";
   }
 }

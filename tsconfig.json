@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "isolatedModules": false,
+    "lib": ["ES2015"]
+  }
+}

@@ -1,42 +1,69 @@
 # piDash
+
 > Simplified clock/dashboard aimed at raspberry pi
 
-## How to use
-- Download and open index.html
-- Disable Cross-Origin Restrictions to enable non-https api(s)
-- customize widgets with config.js
+## Easy and Dangerous Installation
+
+**Inspect `install.sh` before running or use the Recommended Installation**
+
+- Clone repo
+- Run `sudo install.sh`
+- Customize widgets with config.js
+- Restart Pi
+
+## Recommended Installation
+
+- Clone repo
+- Install Deno (`curl -fsSL https://deno.land/x/install/install.sh | sh`)
+- Install surf (`sudo apt install surf`)
+- Set pidash to update and start on boot
+  - `cp pidash.service /etc/systemd/system/pidash.service`
+  - `sudo systemctl daemon-reload`
+  - `sudo systemctl enable pidash`
+- Customize widgets with config.js
+- Restart Pi
+
+## Development
+
+- Run `deno run --allow-net --allow-read mod.t` to run server.
+- Access `localhost:3000` to access pidash
 
 ## Docs
+
 ### config.js
+
 ```javascript
 var config = {
-  backgroundImages:[
+  backgroundImages: [
     "/img/bunnies.jpg", // https://i.imgur.com/mE1MUpd.jpeg
     "https://i.imgur.com/nR8jJEM.jpeg",
     "https://live.staticflickr.com/5443/9369949185_0846c27d6c_b.jpg",
     "https://live.staticflickr.com/3804/11623216156_9e9f5eaa4a_c.jpg",
   ],
-  redditUrl:"https://www.reddit.com/r/EarthPorn/hot.json",
-  widgets:[
+  redditUrl: "https://www.reddit.com/r/EarthPorn/hot.json",
+  widgets: [
     {
-      widget:"GRTbus",
-      data:{stop:"5008"}
+      widget: "GRTbus",
+      data: { stop: "5008" },
     },
     {
-      widget:"Status",
-      data:{url:"https://example.com/status.txt"}
+      widget: "Status",
+      data: { url: "https://example.com/status.txt" },
     },
     {
-      widget:"Weather",
-      data:{appid:"xxxxxxxxx",city:"Waterloo"}
-    }
-  ]
+      widget: "Weather",
+      data: { appid: "xxxxxxxxx", city: "Waterloo" },
+    },
+  ],
 };
 ```
+
 The config file allows you to select widgets and set the background images. The widget tag refers to the name of the function in the file and the data is passed to the widget constructor. We can include multiple instances of the same widget as well.
 
 ### Widgets
+
 Widgets are added via a single js file in `/widgets` in the template below:
+
 ```javascript
 /*
 {Widget Description}
@@ -66,12 +93,15 @@ widgetDirectory.{Widget ID} = function(data){
   }
 }
 ```
+
 Unfortunately, we need to include the js file in the top of index.html right now. (see [issue #1](https://github.com/dotjersh/pidash/issues/1#issue-399087514))
 
 ## Contributing
+
 Feel free to submit a PR request with additions and/or bug fixes!
 
 ### Contributers
+
 - david329
 - dotjersh
 - benkeun

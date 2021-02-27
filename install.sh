@@ -11,4 +11,4 @@ cp pidash.service /etc/systemd/system/pidash.service
 sudo systemctl daemon-reload
 
 echo "Starting PiDash Service to run on Boot"
-sudo systemctl start pidash
+sudo systemctl enable pidash

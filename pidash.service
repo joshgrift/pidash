@@ -2,4 +2,7 @@
 Description=PiDash Service
 
 [Service]
-ExecStart=bash -c 'git pull; nohup deno run --allow-net --allow-read mod.ts > output.log & sleep 5; surf -F 127.0.0.1:3000'
+ExecStart=bash -c '~/pidash/start.sh'
+
+[Install]
+WantedBy=multi-user.target

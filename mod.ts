@@ -21,4 +21,4 @@ app.use(
   Express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
-app.listen(3000);
+app.listen(process.env.PORT);

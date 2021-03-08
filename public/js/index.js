@@ -35,7 +35,7 @@ window.onload = function () {
   }
 
   //load image destinations
-  $.getJSON(config.redditUrl, function (data) {
+  var data = r(config.redditUrl).then((data) => {
     backgroundImages = [];
     try {
       data["data"]["children"].forEach((element) => {
@@ -50,7 +50,7 @@ window.onload = function () {
     document.body.style.backgroundImage =
       "url('" + config.backgroundImages[backgroundImageIndex] + "')";
   });
-  console.log(config.backgroundImages);
+
   // start the clock. It runs every second
   clock();
 

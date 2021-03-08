@@ -2,30 +2,27 @@
 
 > Simplified clock/dashboard aimed at raspberry pi
 
-## Easy and Dangerous Installation
+## Deploy on Server
 
-**Inspect `install.sh` before running or use the Recommended Installation**
-
+- Install Nodejs and npm
 - Clone repo
-- Run `sudo install.sh`
-- Customize widgets with config.js
-- Restart Pi
+- Run `npm start`
+- Customize widgets with .env
 
-## Recommended Installation
+## Deploy on Pi (`install.sh`)
 
-- Clone repo
-- Install Deno (`curl -fsSL https://deno.land/x/install/install.sh | sh`)
 - Install surf (`sudo apt install surf`)
 - Set pidash to update and start on boot
   - `cp pidash.service /etc/systemd/system/pidash.service`
   - `sudo systemctl daemon-reload`
   - `sudo systemctl enable pidash`
-- Customize widgets with config.js
 - Restart Pi
 
 ## Development
 
-- Run `deno run --allow-net --allow-read mod.t` to run server.
+The development version of pidash uses the defaults environment variables found .env
+
+- Run `npm dev`
 - Access `localhost:3000` to access pidash
 
 ## Docs

@@ -15,13 +15,13 @@ widgetDirectory.GRTbus = function (data) {
 
   // 10 second loop
   this.quickloop = async function (callback) {
-    var data = await r(
-      "http://nwoodthorpe.com/grt/V2/livetime.php?stop=" + this.data.stop
+    var result = await r(
+      "http://nwoodthorpe.com/grt/V2/livetime.php?stop=" + data.stop
     );
 
     try {
-      var time = data.data[0].time;
-      var departure = data.data[0].departure;
+      var time = result.data[0].time;
+      var departure = result.data[0].departure;
 
       var distanceOut = departure - time;
       var eta = Math.ceil(distanceOut / 60);

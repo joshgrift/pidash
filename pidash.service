@@ -1,8 +1,0 @@
-[Unit]
-Description=PiDash Service
-
-[Service]
-ExecStart=bash -c '~/pidash/start.sh'
-
-[Install]
-WantedBy=multi-user.target

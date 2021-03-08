@@ -1,3 +1,9 @@
+<%/*
+  Requires:
+  - widgets
+    list of widget object. key is widget id, body is widget config
+*/%>
+
 <!DOCTYPE html>
 <html lang="en" >
   <head>
@@ -7,16 +13,26 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <link rel="stylesheet" href="css/style.css?version=1.1">
 
-    <link rel="stylesheet" href="widgets/weather.css?version=1.1">
+    <!-- config -->
+    <script>
+      const config = {
+        redditUrl: "<%=reddit_url%>",
+        widgets: [
+          <%for(const widget in widgets){%>
+            { widget: "<%=widget%>", data: <%-widgets[widget]%> },
+          <%}%>
+        ]
+      }
+    </script>
 
-    <!-- index file & config script -->
-    <script src="config.js"></script>
-    <script src="js/index.js?version=1.1"></script>
+    <!-- script -->
+    <script src="js/index.js?version=1.1"></script>    
 
     <!-- widgets -->
-    <script src="widgets/GRTbus.js?v=1"></script>
-    <script src="widgets/status.js?v=1"></script>
-    <script src="widgets/weather.js?v=1"></script>
+    <%for(const widget in widgets){%>
+      <script src="widgets/<%= widget %>.js?v=1"></script>
+      <link rel="stylesheet" href="widgets/<%= widget %>.css?v=1">
+    <%}%>
   </head>
 
   <body>

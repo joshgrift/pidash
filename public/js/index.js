@@ -182,6 +182,10 @@ function clock() {
 async function r(url) {
   var result = await fetch("/request", {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ url: url }),
   });
 
